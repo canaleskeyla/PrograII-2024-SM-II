@@ -1,13 +1,13 @@
 <resources>
-    <string-array name="spnLongitud">
-        <item>Metros</item>
-        <item>Cm</item>
-        <item>Pulgada</item>
-        <item>Pie</item>
-        <item>Vara</item>
-        <item>Yarda</item>
-        <item>Km</item>
-        <item>Milla</item>
-
+    <string name="app_name">conversores</string>
+    <string-array name="spnArea">
+        <item>Metro Cuadrado</item>
+        <item>Vara Cuadrada</item>
+        <item>Yarda Cuadrada</item>
+        <item>pie Cuadrado</item>
+        <item>Tareas</item>
+        <item>Manzanas</item>
+        <item>Hectareas</item>
     </string-array>
+
 </resources>

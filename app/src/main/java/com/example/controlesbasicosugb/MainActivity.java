@@ -1,4 +1,8 @@
-package com.ugb.controlesbasicos;
+//--- Trabajo Hecho por:
+//--- Keila Nallely Canales Nuñez - SMTR068223
+//--- Wesly Ariel Umanzor Arias - SMTR072723
+
+    package com.ugb.controlesbasicosugb;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,48 +11,81 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+    public class MainActivity extends AppCompatActivity {
+        TabHost tbh;
+        TextView tempVal;
+        Spinner spn;
+        Button btnArea;
+        Button btnCalcu;
+        conversores miObj = new conversores();
 
-    TabHot tbh;
-    TextView tempVal;
-    Spinner spn;
-    Button btn;
-    Conversores miobj = new conversores();
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 
-        tbh * findViewById(R.id.tbhconversor);
-        tbh.setup();
+            tbh = findViewById(R.id.tbhParcial);
+            tbh.setup();
 
-        tbh.addTab(tbh.newTabSpec("LON").setContent(R.id.tbhLongitud).setIndicator( "LONGITUD",  null));
-        tbh.addTab(tbh.newTabSpec("ALM").setContent(R.id.tbhAlmacenamiento).setIndicator( "ALMACENAMIENTO", null));
-        tbh.addTab(tbh.newTabSpec("MON").setContent(R.id.tbhMonedas).setIndicator("MONEDAS",  null));
-        btn = findViewById(R.id.btnconvertirLongitud);
-        btn.setOnClickListener(new View.setOnClickListener(){
-            public void onclick(view view){
-                spn = findViewById(R.id.spnDeLongitud)
-                int de = spn.getSelectedItemPosition();
+            tbh.addTab(tbh.newTabSpec( "AGU")).setContent(R.id.ValorparaAgua).setIndicator( "Agua",  null));
+            tbh.addTab(tbh.newTabSpec( "ARE")).setContent(R.id.tabArea).setIndicator("AREA",  null));
 
-                spn = findViewById(R.id.spnALongitud);
-                int a = spn.getSelectedItemPosition();
+            btnArea =findViewById(R.id.btnConvertirArea);
+            btnArea.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        spn = findViewById(R.id.spnDeArea);
+                        int de = spn.getSelectedItemPosition();
 
-                tempVal =
-            }
+                        spn = findViewById(R.id.spnAArea);
+                        int a = spn.getSelectedItemPosition();
+
+                        tempVal = findViewById(R.id.txtCantidadDeArea);
+                        double cantidad = Double.parseDouble(tempVal.getText().toString());
+
+                        double resp = miObj.convertir((0, de, a, cantidad);
+                        Toast.makeText(getApplicationContext(), "Respuesta: " + resp, Toast.LENGTH_LONG).show();
+
+                    } catch (Exception e) {
+                        Toast.makeText(getApplicationContext(),"Error:" + e.getMessage(),
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+
+            });
+            btnCalcu = findViewById(R.id.btnparaCalcular);
+            btnCalcu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    tempVal = findViewById(R.id.txtAgua);
+                    double agua = Double.parseDouble(tempVal.getText().toString());
+                    double cal = 0;
+                    if (agua<=18){
+                        cal=6;
+                    } else if (agua<=28) {
+                        cal = (agua-18)*0.45+6;
+                    } else if (agua>28) {
+                        cal=(agua-28)*0.65+((28-28)*0.45)+6;
+
+                    }
+                    tempVal = findViewById(R.id.lblCalculo);
+                    tempVal.setText("Total que va a pagar: $" + cal);
+
+                }
+
+            });
         }
     }
-}
-class conversores{
-    double[][] valores={
-            {1, 100, 39.3701, 3.28084, 1.193, 1.09361, 0.001, 0.000621371}
-            {1},
-            {1}
-
-    };
-    public double convertir(int opcion, int de, int a, double cantidad){
-        return valores[opcion][a]/valores[opcion][de]*cantidad;
+    class conversores{
+        double[][] valores={
+                {1, 1.4308, 1.19599, 10.7639, 0.0022896393817974, 0.0001431, 0.0001},
+        };
+        public double convertir(int opcion, int de, int a, double cantidad){
+            return valores[opcion][a]/valores[opcion][de]*cantidad;
+        }
     }
-}
